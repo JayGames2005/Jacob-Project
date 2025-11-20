@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Clone</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Server List Sidebar -->
+        <div class="server-list">
+            <div class="server-icon home-icon" data-server="home" title="Home">
+                <svg width="28" height="20" viewBox="0 0 28 20">
+                    <path fill="currentColor" d="M23.021 1.677A21.227 21.227 0 0017.658 0c-.252.462-.483.935-.687 1.418a19.931 19.931 0 00-5.943 0C10.82.935 10.59.462 10.337 0a21.227 21.227 0 00-5.364 1.677C1.647 6.125.223 10.473.537 14.76c2.101 1.555 4.147 2.481 6.157 3.081.496-.67.937-1.379 1.316-2.123a13.256 13.256 0 01-2.072-.992c.173-.127.343-.258.507-.386 3.994 1.843 8.312 1.843 12.25 0 .165.135.335.266.508.386-.664.403-1.356.74-2.072.992.379.744.82 1.453 1.316 2.123 2.01-.6 4.057-1.526 6.157-3.081.375-4.96-1.11-9.257-3.816-13.083zM9.68 12.088c-1.277 0-2.327-1.172-2.327-2.61 0-1.437 1.024-2.61 2.327-2.61 1.303 0 2.35 1.173 2.327 2.61 0 1.438-1.024 2.61-2.327 2.61zm8.64 0c-1.278 0-2.327-1.172-2.327-2.61 0-1.437 1.024-2.61 2.327-2.61 1.303 0 2.35 1.173 2.327 2.61 0 1.438-1.024 2.61-2.327 2.61z"/>
+                </svg>
+            </div>
+            <div class="server-separator"></div>
+            <div class="server-icon add-server" id="add-server-btn" title="Add a Server">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M20 11.1111H12.8889V4H11.1111V11.1111H4V12.8889H11.1111V20H12.8889V12.8889H20V11.1111Z"/>
+                </svg>
+            </div>
+            <div class="server-icon join-server" id="join-server-btn" title="Join a Server">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 2C6.486 2 2 6.486 2 12C2 17.514 6.486 22 12 22C17.514 22 22 17.514 22 12C22 6.486 17.514 2 12 2ZM17 13H13V17H11V13H7V11H11V7H13V11H17V13Z"/>
+                </svg>
+            </div>
+            <div id="servers-container"></div>
+        </div>
+
+        <!-- Channels Sidebar -->
+        <div class="channels-sidebar">
+            <div class="server-header" id="server-header">
+                <h3 id="server-name">Select a Server</h3>
+                <button class="dropdown-icon">▼</button>
+            </div>
+            <div class="channels-container" id="channels-container">
+                <div class="empty-state">Select a server to view channels</div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <div class="content-header">
+                <div class="channel-info">
+                    <span class="channel-icon">#</span>
+                    <h3 id="current-channel">general</h3>
+                </div>
+                <div class="header-toolbar">
+                    <button class="icon-button" id="voice-call-btn" title="Start Voice Call">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M11.999,3.438c-4.285,0-7.76,3.474-7.76,7.76c0,4.285,3.475,7.76,7.76,7.76c4.285,0,7.76-3.475,7.76-7.76C19.759,6.913,16.284,3.438,11.999,3.438z M11.999,17.197c-3.399,0-6.16-2.76-6.16-6.16c0-3.4,2.76-6.16,6.16-6.16s6.16,2.76,6.16,6.16C18.159,14.438,15.399,17.197,11.999,17.197z M13.449,11.198l-3.997,2.77c-0.205,0.142-0.446,0.216-0.689,0.216c-0.134,0-0.27-0.023-0.399-0.07c-0.413-0.151-0.689-0.537-0.689-0.964V8.246c0-0.428,0.275-0.814,0.689-0.964c0.413-0.15,0.865-0.072,1.088,0.146l3.997,2.77c0.313,0.216,0.499,0.566,0.499,0.938C13.948,10.632,13.762,10.982,13.449,11.198z"/>
+                        </svg>
+                    </button>
+                    <button class="icon-button" id="settings-btn" title="Settings">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div class="messages-container" id="messages-container">
+                <div class="welcome-message">
+                    <h2>Welcome to #general</h2>
+                    <p>This is the start of the #general channel.</p>
+                </div>
+            </div>
+
+            <!-- Message Input -->
+            <div class="message-input-container">
+                <div class="typing-indicator hidden" id="typing-indicator">
+                    <span id="typing-users"></span> is typing...
+                </div>
+                <div class="message-input-wrapper">
+                    <button class="attach-button">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                        </svg>
+                    </button>
+                    <input type="text" id="message-input" placeholder="Message #general" autocomplete="off">
+                    <button class="emoji-button">😀</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Members List -->
+        <div class="members-sidebar">
+            <div class="members-header">MEMBERS</div>
+            <div class="members-list" id="members-list">
+                <div class="empty-state">No members</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="create-server-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Create Your Server</h2>
+            <form id="create-server-form">
+                <input type="text" id="server-name-input" placeholder="Server Name" required>
+                <textarea id="server-description-input" placeholder="Server Description (optional)"></textarea>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-secondary" id="cancel-server-btn">Cancel</button>
+                    <button type="submit" class="btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="join-server-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Join a Server</h2>
+            <form id="join-server-form">
+                <input type="text" id="invite-code-input" placeholder="Enter Invite Code" required>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-secondary" id="cancel-join-btn">Cancel</button>
+                    <button type="submit" class="btn-primary">Join</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="voice-modal" class="modal hidden">
+        <div class="modal-content voice-modal">
+            <h2>Voice Channel</h2>
+            <div id="voice-users">
+                <div class="voice-user">
+                    <span class="user-avatar">U</span>
+                    <span class="user-name">You</span>
+                    <button class="mute-btn">🎤</button>
+                </div>
+            </div>
+            <div class="voice-controls">
+                <button id="toggle-mute" class="voice-btn">Mute</button>
+                <button id="toggle-deafen" class="voice-btn">Deafen</button>
+                <button id="leave-voice" class="voice-btn disconnect-btn">Disconnect</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/chat.js"></script>
+    <script src="/js/voice.js"></script>
+</body>
+</html>

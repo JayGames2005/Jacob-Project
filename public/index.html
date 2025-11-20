@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Clone - Login</title>
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1>Welcome Back!</h1>
+            <p class="subtitle">We're so excited to see you again!</p>
+
+            <div id="error-message" class="error-message hidden"></div>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">EMAIL</label>
+                    <input type="email" id="email" name="email" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">PASSWORD</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+
+            <p class="switch-auth">
+                Need an account? <a href="#" id="show-register">Register</a>
+            </p>
+        </div>
+
+        <div class="auth-box hidden" id="register-box">
+            <h1>Create an account</h1>
+            <p class="subtitle">Join the conversation!</p>
+
+            <div id="register-error-message" class="error-message hidden"></div>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-email">EMAIL</label>
+                    <input type="email" id="register-email" name="email" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="register-username">USERNAME</label>
+                    <input type="text" id="register-username" name="username" required autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="register-password">PASSWORD</label>
+                    <input type="password" id="register-password" name="password" required autocomplete="new-password">
+                </div>
+
+                <button type="submit" class="btn-primary">Register</button>
+            </form>
+
+            <p class="switch-auth">
+                Already have an account? <a href="#" id="show-login">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+</body>
+</html>
