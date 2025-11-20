@@ -6,9 +6,9 @@ async function setupDatabase() {
   try {
     console.log('🔧 Setting up database...');
 
-    // Check if .env exists
+    // Check if .env exists (not required on Railway)
     const envPath = path.join(__dirname, '..', '.env');
-    if (!fs.existsSync(envPath)) {
+    if (!fs.existsSync(envPath) && !process.env.DATABASE_URL) {
       console.error('\n❌ .env file not found!');
       console.log('\n📝 Please create a .env file:');
       console.log('   1. Copy .env.example to .env');

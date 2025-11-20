@@ -17,6 +17,12 @@ const { authenticateToken } = require('./middleware/auth');
 const socketHandler = require('./socket');
 
 const app = express();
+
+// Trust proxy for Railway/production
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
